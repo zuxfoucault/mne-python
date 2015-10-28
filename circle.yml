@@ -1,7 +1,7 @@
 machine:
   environment:
     # We need to set this variable to let python see the package installed through apt-get
-    PATH: "~/miniconda/bin"
+    PATH: "~/miniconda/bin:$PATH"
 dependencies:
   cache_directories:
     - "~/miniconda"
@@ -19,6 +19,7 @@ dependencies:
     - conda install numpy scipy scikit-learn mayavi matplotlib sphinx PIL
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
     # Get our display going
+    - sudo apt-get update
     - sudo apt-get install xvfb
     - export DISPLAY=:99.0
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
@@ -35,7 +36,7 @@ general:
   artifacts:
     - "doc/_build/html"
     - "~/log.txt"
-  # Restric the build to the branch master only
+  # Restrict the build to the branch master only
   branches:
     only:
        - circle
