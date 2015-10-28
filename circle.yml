@@ -12,7 +12,7 @@ dependencies:
     # Get a running Python
     - cd ~
     - ls ~/miniconda
-    - if [ ! -d '~/miniconda' ]; then
+    - if [ ! -d "~/miniconda" ]; then
         wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
         chmod +x miniconda.sh;
         ./miniconda.sh -b;
