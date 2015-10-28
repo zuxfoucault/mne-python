@@ -1,16 +1,17 @@
 machine:
   environment:
     # We need to set this variable to let python see the package installed through apt-get
-    PATH: "/home/ubuntu/miniconda/bin:$PATH"
+    PATH: "~/miniconda/bin:$PATH"
     DISPLAY: ":99.0"
 dependencies:
   cache_directories:
-    - "/home/ubuntu/miniconda"
-    - "/home/ubuntu/.mne"
+    - "~/miniconda"
+    - "~/.mne"
   # Various dependencies
   pre:
     # Get a running Python
     - cd ~
+    - ls ~/miniconda
     - if [ ! -d '~/miniconda' ]; then
         wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
         chmod +x miniconda.sh;
