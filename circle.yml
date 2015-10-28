@@ -1,10 +1,12 @@
 machine:
   environment:
     # We need to set this variable to let python see the package installed through apt-get
-    PATH: "~/miniconda/bin:$PATH"
+    PATH: "/home/ubuntu/miniconda/bin:$PATH"
+    DISPLAY: ":99.0"
 dependencies:
   cache_directories:
-    - "~/miniconda"
+    - "/home/ubuntu/miniconda"
+    - "/home/ubuntu/.mne"
   # Various dependencies
   pre:
     # Get a running Python
@@ -15,15 +17,15 @@ dependencies:
         ./miniconda.sh -b;
       fi
     - conda update --yes conda
-    - conda install --yes numpy scipy scikit-learn mayavi matplotlib sphinx PIL six
+    - conda install --yes numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
     # Get our display going
     - sudo apt-get update
     - sudo apt-get install xvfb
-    - export DISPLAY=:99.0
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
   override:
-    - python setup.py install
+    - python setup.py develop
+    - python -c "import mne; print(mne.datasets.sample.data_path(verbose=True))"
     # Pipefail is requested to propagate exit code
     - set -o pipefail && cd doc && make html_dev 2>&1 | tee ~/log.txt
 test:
