@@ -12,10 +12,10 @@ dependencies:
     # Get a running Python
     - cd ~
     # rm -Rf ~/miniconda
-    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    # chmod +x miniconda.sh;
-    # ./miniconda.sh -b;
-    # conda create -n circleenv --yes pip python=2.7
+    - wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    - chmod +x miniconda.sh;
+    - ./miniconda.sh -b;
+    - conda create -n circleenv --yes pip python=2.7
     - ls -al ~/miniconda
     - ls -al ~/miniconda/bin
     - conda update --yes --quiet conda
