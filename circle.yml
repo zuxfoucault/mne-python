@@ -16,6 +16,8 @@ dependencies:
     # chmod +x miniconda.sh;
     # ./miniconda.sh -b;
     # conda create -n circleenv --yes pip python=2.7
+    - ls -al ~/miniconda
+    - ls -al ~/miniconda/bin
     - conda update --yes --quiet conda
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - which python
