@@ -1,7 +1,7 @@
 machine:
   environment:
     # We need to set this variable to let python see the package installed through apt-get
-    PATH: "~/miniconda/bin:$PATH"
+    PATH: "~/miniconda/envs/circleenv/bin:~/miniconda/bin:$PATH"
     DISPLAY: ":99.0"
 dependencies:
   cache_directories:
@@ -15,9 +15,8 @@ dependencies:
     # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
     # chmod +x miniconda.sh;
     # ./miniconda.sh -b;
-    - conda create -n circleenv --yes pip python=2.7
+    # conda create -n circleenv --yes pip python=2.7
     - conda update --yes --quiet conda
-    - source activate circleenv
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - which python
     - which pip
