@@ -11,12 +11,12 @@ dependencies:
   pre:
     # Get a running Python
     - cd ~
-    - rm -Rf ~/miniconda
-    - wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    - chmod +x miniconda.sh;
-    - ./miniconda.sh -b;
+    # rm -Rf ~/miniconda
+    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    # chmod +x miniconda.sh;
+    # ./miniconda.sh -b;
+    - conda create -n circleenv --yes pip python=2.7
     - conda update --yes --quiet conda
-    - conda create -n circleenv --yes pip python=$PYTHON
     - source activate circleenv
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - which python
