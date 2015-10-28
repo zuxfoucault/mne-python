@@ -1,8 +1,9 @@
 machine:
+  ruby:
+    version: rbx-2.2.6
   environment:
     # We need to set this variable to let python see the package installed through apt-get
     PATH: "~/miniconda/envs/circleenv/bin:~/miniconda/bin:$PATH"
-    DISPLAY: ":99.0"
 dependencies:
   cache_directories:
     - "~/miniconda"
@@ -12,22 +13,19 @@ dependencies:
     # Get a running Python
     - cd ~
     # rm -Rf ~/miniconda
-    - wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    - chmod +x miniconda.sh;
-    - ./miniconda.sh -b;
-    - conda create -n circleenv --yes pip python=2.7
+    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    # chmod +x miniconda.sh;
+    # ./miniconda.sh -b;
+    # conda create -n circleenv --yes pip python=2.7
     - ls -al ~/miniconda
     - ls -al ~/miniconda/bin
+    - echo $PATH
     - conda update --yes --quiet conda
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - which python
     - which pip
     - which ipython
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
-    # Get our display going
-    - sudo apt-get update
-    - sudo apt-get install xvfb
-    - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
   override:
     - python setup.py develop
     - python -c "import mne; print(mne.datasets.sample.data_path(verbose=True))"
