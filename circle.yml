@@ -11,11 +11,15 @@ dependencies:
   pre:
     # Get a running Python
     - cd ~
-    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    # chmod +x miniconda.sh;
-    # ./miniconda.sh -b;
-    - conda update --yes conda
+    - rm -Rf ~/miniconda
+    - wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    - chmod +x miniconda.sh;
+    - ./miniconda.sh -b;
+    - conda update --yes --quiet conda
+    - conda create -n circleenv --yes pip python=$PYTHON
+    - source activate circleenv
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
+    - which python
     - which pip
     - which ipython
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
