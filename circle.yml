@@ -14,9 +14,8 @@ dependencies:
         chmod +x miniconda.sh;
         ./miniconda.sh -b;
       fi
-    - export PATH=~/miniconda/bin:$PATH
-    - conda update --yes --quiet conda
-    - conda install numpy scipy scikit-learn mayavi matplotlib sphinx PIL
+    - conda update --yes conda
+    - conda install --yes numpy scipy scikit-learn mayavi matplotlib sphinx PIL six
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
     # Get our display going
     - sudo apt-get update
