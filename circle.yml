@@ -16,6 +16,8 @@ dependencies:
     # ./miniconda.sh -b;
     - conda update --yes conda
     - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
+    - which pip
+    - which ipython
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
     # Get our display going
     - sudo apt-get update
