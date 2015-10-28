@@ -1,0 +1,41 @@
+machine:
+  environment:
+    # We need to set this variable to let python see the package installed through apt-get
+    PYTHONPATH: "/usr/lib/python2.7/dist-packages"
+dependencies:
+  cache_directories:
+    - "~/miniconda"
+  # Various dependencies
+  pre:
+    # Get a running Python
+    - cd ~
+    - if [ ! -d '~/miniconda' ]; then
+        wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+        chmod +x miniconda.sh;
+        ./miniconda.sh -b;
+      fi
+    - export PATH=~/miniconda/bin:$PATH
+    - conda update --yes --quiet conda
+    - conda install numpy scipy scikit-learn mayavi matplotlib sphinx PIL
+    - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
+    # Get our display going
+    - sudo apt-get install xvfb
+    - export DISPLAY=:99.0
+    - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
+  override:
+    - python setup.py install
+    # Pipefail is requested to propagate exit code
+    - set -o pipefail && cd doc && make html_dev 2>&1 | tee ~/log.txt
+test:
+  # Grep error on the documentation
+  override:
+    - cat ~/log.txt && if grep -q "Traceback (most recent call last):" ~/log.txt; then false; else true; fi
+general:
+  # Open the doc to the API
+  artifacts:
+    - "doc/_build/html"
+    - "~/log.txt"
+  # Restric the build to the branch master only
+  branches:
+    only:
+       - circle
