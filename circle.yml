@@ -11,13 +11,11 @@ dependencies:
   pre:
     # Get a running Python
     - cd ~
-    - if ! which conda ; then
-        wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-        chmod +x miniconda.sh;
-        ./miniconda.sh -b;
-      fi
+    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    # chmod +x miniconda.sh;
+    # ./miniconda.sh -b;
     - conda update --yes conda
-    - conda install --yes numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
+    - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
     - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
     # Get our display going
     - sudo apt-get update
