@@ -1,15 +1,29 @@
 machine:
   environment:
     # We need to set this variable to let python see the package installed through apt-get
-    PYTHONPATH: "/usr/lib/python2.7/dist-packages"
+    PATH: "~/miniconda/envs/circleenv/bin:~/miniconda/bin:$PATH"
 dependencies:
   cache_directories:
-    - "~/mne_data"
+    - "~/miniconda"
+    - "~/.mne"
   # Various dependencies
   pre:
-    - suda pt-get update
-    - sudo apt-get install python-numpy python-scipy python-matplotlib python-PIL python-scikits-learn mayavi ipython
-    - pip install sphinx sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
+    # Get a running Python
+    - cd ~
+    # rm -Rf ~/miniconda
+    # wget -q http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    # chmod +x miniconda.sh;
+    # ./miniconda.sh -b;
+    # conda create -n circleenv --yes pip python=2.7
+    - ls -al ~/miniconda
+    - ls -al ~/miniconda/bin
+    - echo $PATH
+    - conda update --yes --quiet conda
+    - conda install --yes pip numpy scipy scikit-learn mayavi matplotlib sphinx PIL six IPython
+    - which python
+    - which pip
+    - which ipython
+    - pip install sphinx-gallery sphinx-bootstrap-theme PySurfer nilearn neo
   override:
     - python setup.py develop
     - python -c "import mne; print(mne.datasets.sample.data_path(verbose=True))"
