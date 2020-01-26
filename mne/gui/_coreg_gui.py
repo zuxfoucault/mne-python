@@ -492,6 +492,11 @@ class CoregModel(HasPrivateTraits):
         self.nearest_calc = _DistanceQuery(
             self.processed_high_res_mri_points * self.parameters[6:9])
 
+    @on_trait_change('transformed_high_res_mri_points')
+    def _update_nearest_calc(self):
+        self.nearest_calc = _DistanceQuery(
+            self.transformed_high_res_mri_points)
+
     @cached_property
     def _get_transformed_high_res_mri_points(self):
         points = apply_trans(self.mri_trans,
