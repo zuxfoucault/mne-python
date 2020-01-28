@@ -241,7 +241,7 @@ class CoregModel(HasPrivateTraits):
 
     # MRI geometry transformed to viewing coordinate system
     processed_high_res_mri_points = Property(
-        depends_on=['mri:bem_high_res:surf', 'grow_hair'])
+        depends_on=['mri:bem_high_res:surf', 'grow_hair', 'mri_trans'])
     processed_low_res_mri_points = Property(
         depends_on=['mri:bem_low_res:surf', 'grow_hair'])
     transformed_high_res_mri_points = Property(
@@ -395,6 +395,7 @@ class CoregModel(HasPrivateTraits):
 
     @cached_property
     def _get_processed_high_res_mri_points(self):
+        print("_get_processed_high_res_mri_points")
         return self._get_processed_mri_points('high')
 
     @cached_property
@@ -485,20 +486,24 @@ class CoregModel(HasPrivateTraits):
         return points
 
     def _nearest_calc_default(self):
+        print("_nearest_calc_default")
         return _DistanceQuery(np.zeros((1, 3)))
 
     @on_trait_change('processed_high_res_mri_points')
     def _update_nearest_calc(self):
+        print("_update_nearest_calc: processed_high_res_mri_points")
         self.nearest_calc = _DistanceQuery(
             self.processed_high_res_mri_points * self.parameters[6:9])
 
-    @on_trait_change('transformed_high_res_mri_points')
-    def _update_nearest_calc(self):
-        self.nearest_calc = _DistanceQuery(
-            self.transformed_high_res_mri_points)
+    # @on_trait_change('transformed_high_res_mri_points')
+    # def _update_nearest_calc(self):
+        # print("_update_nearest_calc: transformed_high_res_mri_points")
+        # self.nearest_calc = _DistanceQuery(
+            # self.processed_high_res_mri_points * self.parameters[6:9])
 
     @cached_property
     def _get_transformed_high_res_mri_points(self):
+        print("_get_transformed_high_res_mri_points")
         points = apply_trans(self.mri_trans,
                              self.processed_high_res_mri_points)
         return points
@@ -671,6 +676,7 @@ class CoregModel(HasPrivateTraits):
             self.parameters[:6] = est
         else:
             self.parameters[:] = np.concatenate([est, [est[-1]] * 2])
+        print("end fit_fiducials")
 
     def _setup_icp(self, n_scale_params):
         """Get parameters for an ICP iteration."""
@@ -724,6 +730,7 @@ class CoregModel(HasPrivateTraits):
         attr = 'fit_icp_running' if n_scale_params == 0 else 'fits_icp_running'
         setattr(self, attr, True)
         GUI.process_events()  # update the cancel button
+        print("before iter")
         self.icp_start_time = time.time()
         for self.iteration in range(self.icp_iterations):
             head_pts, mri_pts, weights = self._setup_icp(n_scale_params)
